@@ -29,7 +29,7 @@ function App() {
         <Formazione />
         <Lingue />
         <Competenze />
-
+        <SideBar />
         <Footer />
       </Container>
     </>
