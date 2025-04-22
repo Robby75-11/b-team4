@@ -9,11 +9,15 @@ import {
 } from "react-bootstrap";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "bootstrap-icons/font/bootstrap-icons.css";
-import logo from "../img/linkedin-logo-1629183836.png";
+import logo from "../assets/img/linkedin-logo-1629183836.png";
 
 function NavBar() {
   return (
-    <Navbar style={{ backgroundColor: "#FFFFFF" }} expand="lg">
+    <Navbar
+      style={{ backgroundColor: "#FFFFFF" }}
+      expand="lg"
+      className="sticky-top bg-white shadow-sm"
+    >
       <Container>
         <Navbar.Brand
           href="#home"
@@ -80,7 +84,7 @@ function NavBar() {
                   borderRight: "1px solid #ccc",
                 }}
               >
-                <i class="bi bi-person-circle d-block"></i>
+                <i className="bi bi-person-circle d-block"></i>
                 Me
               </Dropdown.Toggle>
               <Dropdown.Menu>
