@@ -18,7 +18,7 @@ const Formazione = function () {
           <p>Laurea Magistrale, Neuroengineering and Neurotechnologies</p>
           <p className="text-secondary">set 2024</p>
           <div className="fw-bold mt-5 mb-4">
-            <i class="bi bi-gem"></i> Matlab e Python
+            <i className="bi bi-gem"></i> Matlab e Python
           </div>
         </div>
       </div>
@@ -35,7 +35,7 @@ const Formazione = function () {
           <p>Laurea Triennale, Ingegneria Biomedica</p>
           <p className="text-secondary">set 2020 - set 2024</p>
           <div className="fw-bold mt-5 mb-4">
-            <i class="bi bi-gem"></i> Matlab
+            <i className="bi bi-gem"></i> Matlab
           </div>
         </div>
       </div>

@@ -18,19 +18,25 @@ function App() {
         style={{
           backgroundColor: "#F4F2EE",
           minHeight: "100vh",
-          display: "flex",
           paddingTop: "20px",
-          gap: 10,
-          flexDirection: "column",
         }}
       >
-        <MainProfile />
-        <Esperienze />
-        <Formazione />
-        <Lingue />
-        <Competenze />
-
-        <Footer />
+        <div className="row">
+          <div
+            className="col-9"
+            style={{ display: "flex", flexDirection: "column", gap: 10 }}
+          >
+            <MainProfile />
+            <Esperienze />
+            <Formazione />
+            <Lingue />
+            <Competenze />
+            <Footer />
+          </div>
+          <div className="col-3">
+            <SideBar />
+          </div>
+        </div>
       </Container>
     </>
   );
