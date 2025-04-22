@@ -9,7 +9,7 @@ import { Container } from "react-bootstrap";
 import Competenze from "./component/Competenze";
 import Formazione from "./component/Formazione";
 import Lingue from "./component/Lingue";
-
+import SideBar from "./component/SideBar";
 function App() {
   return (
     <>

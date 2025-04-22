@@ -1,3 +1,11 @@
+
+.app-layout {
+    display: flex;
+    flex-direction: row;
+    min-height: 100vh;
+    padding: 0;
+    margin: 0;
+}
 .image-container-left {
   position: absolute;
   top: 180px;
@@ -38,16 +46,22 @@
 @keyframes logo-spin {
   from {
     transform: rotate(0deg);
+>>>>>>> main
   }
-  to {
-    transform: rotate(360deg);
+  
+  .main-content {
+    flex: 1;
+    padding: 20px;
   }
-}
+  
+  .sidebar-area {
+    width: 300px;
+    border-left: 1px solid #ddd;
+    background-color: #f8f9fa;
+    padding: 20px;
+  }
 
-@media (prefers-reduced-motion: no-preference) {
-  a:nth-of-type(2) .logo {
-    animation: logo-spin infinite 20s linear;
-  }
+
 }
 
 .card {
