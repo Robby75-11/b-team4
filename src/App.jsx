@@ -21,14 +21,6 @@ function App() {
           paddingTop: "20px",
         }}
       >
-        <MainProfile />
-        <Esperienze />
-        <Formazione />
-        <Lingue />
-        <Competenze />
-        <SideBar />
-        <Footer />
-
         <div className="row">
           <div
             className="col-9"
