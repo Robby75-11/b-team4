@@ -1,11 +1,11 @@
 import "./App.css";
-import Esperienze from "./component/Esperienze";
-import "/node_modules/bootstrap/dist/css/bootstrap.min.css";
-
+import NavBar from "./assets/components/NavBar";
+import "bootstrap/dist/css/bootstrap.min.css";
+import "bootstrap-icons/font/bootstrap-icons.css";
 function App() {
   return (
     <>
-      <Esperienze />
+      <NavBar style={{ position: "sticky", top: 0, zIndex: 1000 }} />
     </>
   );
 }
