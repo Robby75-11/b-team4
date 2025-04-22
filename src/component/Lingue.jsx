@@ -1,6 +1,6 @@
 const Lingue = function () {
   return (
-    <div className="border border-secondary rounded-2 p-3">
+    <div className="border border-secondary rounded-2 p-3 bg-white">
       <h1>Lingue</h1>
       <div className=" border-bottom border-secondary">
         <div className="mt-3 lh-1">

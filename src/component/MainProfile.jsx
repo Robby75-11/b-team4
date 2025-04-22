@@ -22,7 +22,7 @@ const MainProfile = function () {
       />
       <Card.Body>
         <Row>
-          <Col sx={8} md={8} lg={8}>
+          <Col sx={8}>
             <Card.Title className="mt-5 fs-3">Mario Rossi</Card.Title>
             <Card.Text>
               Some quick example text to build on the card title and make up the
@@ -40,7 +40,7 @@ const MainProfile = function () {
               </a>
             </Card.Text>
           </Col>
-          <Col sx={4} md={4} lg={4}>
+          <Col sx={4}>
             <div className="d-flex mt-5 ms-4">
               <div>
                 <img
@@ -59,25 +59,29 @@ const MainProfile = function () {
         <div className="mt-2 mb-2">
           <Button
             variant="primary"
-            className="text-white btn-outline-primary me-2 mt-2 rounded-start rounded-end"
+            className="text-white btn-outline-primary me-2 mt-2"
+            style={{ borderRadius: 32 }}
           >
             Disponibile per
           </Button>
           <Button
-            variant="white"
-            className="text-primary btn-outline-primary me-2 mt-2 rounded-start rounded-end"
+            variant="secondary"
+            className="text-primary btn-outline-primary me-2 mt-2 bg-white"
+            style={{ borderRadius: 32 }}
           >
             Aggiungi sezione del profilo
           </Button>
           <Button
             variant="white"
-            className="text-primary btn-outline-primary me-2 mt-2 rounded-start rounded-end"
+            className="text-primary btn-outline-primary me-2 mt-2 bg-white"
+            style={{ borderRadius: 32 }}
           >
             Migliora profilo
           </Button>
           <Button
             variant="white"
-            className="text-secondary btn-outline-secondary me-2 mt-2 rounded-start rounded-end"
+            className="text-primary btn-outline-primary me-2 mt-2 bg-white"
+            style={{ borderRadius: 32 }}
           >
             Risorse
           </Button>

@@ -167,7 +167,7 @@ const Footer = () => {
         </Col>
         <Row className="mt-3">
           <Col>
-            <span>LinkedIn Corporation © 2025</span>
+            <span>LinkedIn Corporation © 2025 SC</span>
           </Col>
         </Row>
       </Row>

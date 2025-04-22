@@ -12,18 +12,27 @@ import Lingue from "./component/Lingue";
 
 function App() {
   return (
-    <Container style={{ backgroundColor: "#F4F2EE", minHeight: "100vh" }}>
+    <>
       <NavBar />
-      <br />
-      <Esperienze />
-      <br />
-      <MainProfile />
-      <Formazione />
-      <Lingue />
-      <Competenze />
-      <br />
-      <Footer />
-    </Container>
+      <Container
+        style={{
+          backgroundColor: "#F4F2EE",
+          minHeight: "100vh",
+          display: "flex",
+          paddingTop: "20px",
+          gap: 10,
+          flexDirection: "column",
+        }}
+      >
+        <MainProfile />
+        <Esperienze />
+        <Formazione />
+        <Lingue />
+        <Competenze />
+
+        <Footer />
+      </Container>
+    </>
   );
 }
 

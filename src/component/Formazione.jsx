@@ -1,6 +1,9 @@
 const Formazione = function () {
   return (
-    <div className="border border-secondary rounded-2 p-3">
+    <div
+      className="border border-secondary rounded-2 p-3"
+      style={{ backgroundColor: "#FFFFFF" }}
+    >
       <h1>Formazione</h1>
       <div className="d-flex border-bottom border-secondary">
         <div>
