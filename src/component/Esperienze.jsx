@@ -119,7 +119,10 @@ const Esperienze = () => {
             <div className="d-flex border-bottom border-secondary">
               <div>
                 <img
-                  src={esperienza.image || "placeholder.jpg"}
+                  src={
+                    esperienza.image ||
+                    "https://icon2.cleanpng.com/lnd/20240918/us/95fa3f338924288ba0d02cc7c9e561.webp"
+                  }
                   alt="Logo Aziendale"
                   className="w-100"
                 />
