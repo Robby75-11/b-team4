@@ -13,7 +13,7 @@ const Footer = () => {
       style={{ backgroundColor: "#F4F2EE" }}
       className="text-dark py-4"
     >
-      <Row>
+      <Row className="justify-content-between">
         <Col xs={12} md={2}>
           <Row className="mb-2">
             <Col>
