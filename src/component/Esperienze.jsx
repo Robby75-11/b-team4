@@ -20,8 +20,7 @@ const Esperienze = () => {
     area: "",
   }); // Stato per i dati del form
 
-  // Fetch delle esperienze
-  useEffect(() => {
+  const fetchEsperienze = () => {
     fetch(URL, {
       headers: {
         Authorization: authorization,
@@ -40,6 +39,11 @@ const Esperienze = () => {
       .catch((error) => {
         console.error("Errore:", error);
       });
+  };
+
+  // Fetch delle esperienze al caricamento del componente
+  useEffect(() => {
+    fetchEsperienze();
   }, []);
 
   // Funzione per gestire l'apertura del modale
@@ -51,7 +55,7 @@ const Esperienze = () => {
   // Funzione per gestire il cambiamento dei campi del form
   const handleInputChange = (e) => {
     const { name, value } = e.target;
-    setNewExperience({ ...newExperience, [name]: value });
+    setAddEsperienza({ ...addEsperienza, [name]: value });
   };
 
   // Funzione per inviare la chiamata POST
@@ -75,7 +79,6 @@ const Esperienze = () => {
       body: JSON.stringify(formattedExperience),
     })
       .then((response) => {
-        console.log("Response status:", response.status);
         if (!response.ok) {
           throw new Error("Errore nella fetch");
         }
@@ -83,8 +86,8 @@ const Esperienze = () => {
       })
       .then((data) => {
         console.log("Esperienza aggiunta:", data);
-        setAddEsperienza([...esperienze, data]);
-        handleCloseModal();
+        fetchEsperienze(); // Aggiorna la lista delle esperienze
+        handleCloseModal(); // Chiudi il modale
       })
       .catch((error) => {
         console.error("Errore:", error);
