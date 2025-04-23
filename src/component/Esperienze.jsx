@@ -120,7 +120,7 @@ const Esperienze = () => {
               <div>
                 <img
                   src={esperienza.image || "placeholder.jpg"}
-                  alt="Logo"
+                  alt="Logo Aziendale"
                   className="w-100"
                 />
               </div>
