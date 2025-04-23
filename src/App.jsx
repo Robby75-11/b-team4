@@ -23,7 +23,7 @@ function App() {
       >
         <div className="row">
           <div
-            className="col-9"
+            className="col-12 col-md-9"
             style={{ display: "flex", flexDirection: "column", gap: 10 }}
           >
             <MainProfile />
@@ -32,7 +32,7 @@ function App() {
             <Lingue />
             <Competenze />
           </div>
-          <div className="col-3">
+          <div className="col-3 d-none d-sm-block">
             <SideBar />
           </div>
         </div>
