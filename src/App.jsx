@@ -39,14 +39,7 @@ function App() {
             <SideBar />
           </div>
         </div>
-<<<<<<< HEAD
-        {/* Posizionamento del componente Messaggi */}
-        <div className="messaging-floating">
-          <Messaggi />
-        </div>
-=======
         <Footer />
->>>>>>> main
       </Container>
     </>
   );
