@@ -5,7 +5,7 @@ import linkedinLogo from "../assets/logo linkedn.png";
 
 const SideBar = () => {
   return (
-    <Card className="mb-4 shadow-sm">
+    <Card className="mb-4 shadow-sm d-none d-sm-block">
       <Card.Body className="d-flex flex-column align-items-center">
         <h5 className="mb-3">In primo piano</h5>
         <ListGroup variant="flush" className="w-100 text-center">
