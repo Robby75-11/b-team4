@@ -32,7 +32,10 @@ const Esperienze = () => {
   }, [dispatch]);
 
   return (
-    <Container fluid style={{ backgroundColor: "#FFFFFF" }}>
+    <Container
+      fluid
+      style={{ backgroundColor: "#FFFFFF", borderColor: "#D2D2D2" }}
+    >
       <Row>
         <Col xs={10}>
           <h2>Esperienze</h2>
