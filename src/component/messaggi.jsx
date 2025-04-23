@@ -24,7 +24,7 @@ const Messaggi = () => {
       }`}
       style={{
         width: isVisible ? "300px" : "250px",
-        height: isVisible ? "800px" : "50px",
+        height: isVisible ? "500px" : "50px",
         transition: "all 0.3s ease",
       }}
     >
