@@ -119,10 +119,9 @@ const Esperienze = () => {
             <div className="d-flex border-bottom border-secondary">
               <div>
                 <img
-                  src={esperienza.image || "https://via.placeholder.com/80"}
+                  src={esperienza.image || "placeholder.jpg"}
                   alt="Logo"
-                  style={{ height: "80px", width: "80px" }}
-                  className="me-3 mt-3"
+                  className="w-100"
                 />
               </div>
               <div className="mt-3 lh-1 w-100">
@@ -197,5 +196,95 @@ const Esperienze = () => {
     </div>
   );
 };
+
+/* Ho lasciato commentat la vecchia struttura, qualora qualcuno ci abbia lavorato 
+prima della modifica e avesse bisogno di un riscontro*/
+/* <Container
+      fluid
+      style={{ backgroundColor: "#FFFFFF", borderColor: "#D2D2D2" }}
+    >
+      <Row>
+        <Col xs={10}>
+          <h2>Esperienze</h2>
+        </Col>
+        <Col xs={1}>
+          <i
+            className="bi bi-plus-lg text-black"
+            onClick={handleShowModal}
+            style={{ cursor: "pointer" }}
+          ></i>
+        </Col>
+        <Col xs={1}>
+          <i
+            className="bi bi-pencil text-black"
+            onClick={() => console.log("Pencil icon clicked")}
+            style={{ cursor: "pointer" }}
+          ></i>
+        </Col>
+      </Row>
+
+      <Row>
+        {esperienze.length === 0 ? (
+          <Col xs={12} className="mb-3">
+            <Row>
+              <Col xs={2}>
+                <img
+                  src={profile.image || "placeholder.jpg"}
+                  alt="Company Logo"
+                  className="w-100"
+                />
+              </Col>
+
+              <Col xs={9}>
+                <h5 className="text-black">
+                  {profile.title || "Titolo non disponibile"}
+                </h5>
+                <p>azienda</p>
+                <p>
+                  {new Date(profile.createdAt).toLocaleDateString() ||
+                    "Data creazione non disponibile"}{" "}
+                  -{" "}
+                  {new Date(profile.updatedAt).toLocaleDateString() ||
+                    "Data aggiornamento non disponibile"}
+                </p>
+                <p>{profile.area || "Area non disponibile"}</p>
+              </Col>
+            </Row>
+          </Col>
+        ) : (
+          esperienze.map((esperienza, index) => (
+            <Col xs={12} className="mb-3" key={index}>
+              <Row>
+                <Col xs={2}>
+                  <img
+                    src={
+                      esperienza.image ||
+                      "https://icon2.cleanpng.com/lnd/20240918/us/95fa3f338924288ba0d02cc7c9e561.webp"
+                    }
+                    alt="Company Logo"
+                    className="w-100"
+                  />
+                </Col>
+
+                <Col xs={9}>
+                  <h5 className="text-black">
+                    {esperienza.role || "Ruolo non disponibile"}
+                  </h5>
+                  <p>{esperienza.company || "Azienda non disponibile"}</p>
+                  <p>
+                    {new Date(esperienza.startDate).toLocaleDateString() ||
+                      "Data inizio non disponibile"}{" "}
+                    -{" "}
+                    {esperienza.endDate
+                      ? new Date(esperienza.endDate).toLocaleDateString()
+                      : "Presente"}
+                  </p>
+                  <p>{esperienza.area || "Area non disponibile"}</p>
+                </Col>
+              </Row>
+            </Col>
+          ))
+        )}
+      </Row>*/
 
 export default Esperienze;
