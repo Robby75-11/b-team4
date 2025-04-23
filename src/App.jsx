@@ -1,3 +1,4 @@
+import React from "react";
 import "./App.css";
 import NavBar from "./component/NavBar";
 import Esperienze from "./component/Esperienze";
@@ -10,6 +11,8 @@ import Competenze from "./component/Competenze";
 import Formazione from "./component/Formazione";
 import Lingue from "./component/Lingue";
 import SideBar from "./component/SideBar";
+import Messaggi from "./component/messsaggi";
+
 function App() {
   return (
     <>
@@ -36,6 +39,10 @@ function App() {
           <div className="col-3">
             <SideBar />
           </div>
+        </div>
+        {/* Posizionamento del componente Messaggi */}
+        <div className="messaging-floating">
+          <Messaggi />
         </div>
       </Container>
     </>
