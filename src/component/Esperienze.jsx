@@ -94,39 +94,68 @@ const Esperienze = () => {
       });
   };
   return (
-    <Container
-      fluid
+    <div
+      className="border border-2 rounded-2 p-3"
       style={{ backgroundColor: "#FFFFFF", borderColor: "#D2D2D2" }}
     >
-      <Row>
-        <Col xs={10}>
-          <h2>Esperienze</h2>
-        </Col>
-        <Col xs={1}>
-          <i
-            className="bi bi-plus-lg text-black"
-            onClick={handleShowModal}
-            style={{ cursor: "pointer" }}
-          ></i>
-        </Col>
-        <Col xs={1}>
-          <i
-            className="bi bi-pencil text-black"
-            onClick={() => console.log("Pencil icon clicked")}
-            style={{ cursor: "pointer" }}
-          ></i>
-        </Col>
-      </Row>
-
+      <div className="d-flex justify-content-between align-items-center">
+        <h1>Esperienze</h1>
+        <div>
+          <Row className="d-flex align-items-center gap-2">
+            <Col>
+              <i
+                className="bi bi-plus-lg text-black"
+                onClick={handleShowModal}
+                style={{ cursor: "pointer" }}
+              ></i>
+            </Col>
+            <Col>
+              <i
+                className="bi bi-pencil text-black"
+                onClick={() => console.log("Pencil icon clicked")}
+                style={{ cursor: "pointer" }}
+              ></i>
+            </Col>
+          </Row>
+        </div>
+      </div>
       <Row>
         {esperienze.length === 0 ? (
-          <Col xs={12} className="mb-3">
+          <div className="d-flex border-bottom border-secondary">
+            <div>
+              <img
+                src={profile.image || "placeholder.jpg"}
+                alt="Company Logo"
+                style={{ height: "80px", width: "80px" }}
+                className="me-3 mt-3"
+              />
+            </div>
+            <div className="mt-3 lh-1">
+              <p className="fw-bold">
+                {profile.title || "Titolo non disponibile"}
+              </p>
+              <p>Azienda</p>
+              <p className="text-secondary">
+                {new Date(profile.createdAt).toLocaleDateString() ||
+                  "Data creazione non disponibile"}{" "}
+                -{" "}
+                {new Date(profile.updatedAt).toLocaleDateString() ||
+                  "Data aggiornamento non disponibile"}
+              </p>
+              <div className="fw-bold mt-5 mb-4">
+                {profile.area || "Area non disponibile"}
+              </div>
+            </div>
+          </div>
+        ) : (
+          /* <Col xs={12} className="mb-3">
             <Row>
               <Col xs={2}>
                 <img
                   src={profile.image || "placeholder.jpg"}
                   alt="Company Logo"
-                  className="w-100"
+                  style={{ height: "80px", width: "80px" }}
+                  className="me-3 mt-3"
                 />
               </Col>
 
@@ -145,28 +174,28 @@ const Esperienze = () => {
                 <p>{profile.area || "Area non disponibile"}</p>
               </Col>
             </Row>
-          </Col>
-        ) : (
+          </Col>*/
           esperienze.map((esperienza, index) => (
             <Col xs={12} className="mb-3" key={index}>
-              <Row>
-                <Col xs={2}>
+              <div className="d-flex border-bottom border-secondary">
+                <div>
                   <img
                     src={
                       esperienza.image ||
                       "https://icon2.cleanpng.com/lnd/20240918/us/95fa3f338924288ba0d02cc7c9e561.webp"
                     }
                     alt="Company Logo"
-                    className="w-100"
+                    style={{ height: "80px", width: "80px" }}
+                    className="me-3 mt-3"
                   />
-                </Col>
+                </div>
 
-                <Col xs={9}>
-                  <h5 className="text-black">
+                <div className="mt-3 lh-1">
+                  <p className="fw-bold">
                     {esperienza.role || "Ruolo non disponibile"}
-                  </h5>
+                  </p>
                   <p>{esperienza.company || "Azienda non disponibile"}</p>
-                  <p>
+                  <p className="text-secondary">
                     {new Date(esperienza.startDate).toLocaleDateString() ||
                       "Data inizio non disponibile"}{" "}
                     -{" "}
@@ -174,9 +203,11 @@ const Esperienze = () => {
                       ? new Date(esperienza.endDate).toLocaleDateString()
                       : "Presente"}
                   </p>
-                  <p>{esperienza.area || "Area non disponibile"}</p>
-                </Col>
-              </Row>
+                  <div className="fw-bold mt-5 mb-4">
+                    {esperienza.area || "Area non disponibile"}
+                  </div>
+                </div>
+              </div>
             </Col>
           ))
         )}
@@ -254,98 +285,8 @@ const Esperienze = () => {
           </Form>
         </Modal.Body>
       </Modal>
-    </Container>
+    </div>
   );
-
-  /* Ho lasciato commentat la vecchia struttura, qualora qualcuno ci abbia lavorato 
-prima della modifica e avesse bisogno di un riscontro*/
-  /* <Container
-      fluid
-      style={{ backgroundColor: "#FFFFFF", borderColor: "#D2D2D2" }}
-    >
-      <Row>
-        <Col xs={10}>
-          <h2>Esperienze</h2>
-        </Col>
-        <Col xs={1}>
-          <i
-            className="bi bi-plus-lg text-black"
-            onClick={handleShowModal}
-            style={{ cursor: "pointer" }}
-          ></i>
-        </Col>
-        <Col xs={1}>
-          <i
-            className="bi bi-pencil text-black"
-            onClick={() => console.log("Pencil icon clicked")}
-            style={{ cursor: "pointer" }}
-          ></i>
-        </Col>
-      </Row>
-
-      <Row>
-        {esperienze.length === 0 ? (
-          <Col xs={12} className="mb-3">
-            <Row>
-              <Col xs={2}>
-                <img
-                  src={profile.image || "placeholder.jpg"}
-                  alt="Company Logo"
-                  className="w-100"
-                />
-              </Col>
-
-              <Col xs={9}>
-                <h5 className="text-black">
-                  {profile.title || "Titolo non disponibile"}
-                </h5>
-                <p>azienda</p>
-                <p>
-                  {new Date(profile.createdAt).toLocaleDateString() ||
-                    "Data creazione non disponibile"}{" "}
-                  -{" "}
-                  {new Date(profile.updatedAt).toLocaleDateString() ||
-                    "Data aggiornamento non disponibile"}
-                </p>
-                <p>{profile.area || "Area non disponibile"}</p>
-              </Col>
-            </Row>
-          </Col>
-        ) : (
-          esperienze.map((esperienza, index) => (
-            <Col xs={12} className="mb-3" key={index}>
-              <Row>
-                <Col xs={2}>
-                  <img
-                    src={
-                      esperienza.image ||
-                      "https://icon2.cleanpng.com/lnd/20240918/us/95fa3f338924288ba0d02cc7c9e561.webp"
-                    }
-                    alt="Company Logo"
-                    className="w-100"
-                  />
-                </Col>
-
-                <Col xs={9}>
-                  <h5 className="text-black">
-                    {esperienza.role || "Ruolo non disponibile"}
-                  </h5>
-                  <p>{esperienza.company || "Azienda non disponibile"}</p>
-                  <p>
-                    {new Date(esperienza.startDate).toLocaleDateString() ||
-                      "Data inizio non disponibile"}{" "}
-                    -{" "}
-                    {esperienza.endDate
-                      ? new Date(esperienza.endDate).toLocaleDateString()
-                      : "Presente"}
-                  </p>
-                  <p>{esperienza.area || "Area non disponibile"}</p>
-                </Col>
-              </Row>
-            </Col>
-          ))
-        )}
-      </Row>*/
 };
 
 export default Esperienze;
