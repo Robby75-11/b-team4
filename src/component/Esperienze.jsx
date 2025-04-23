@@ -1,35 +1,10 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { setProfile } from "../redux/actions";
+
 import { Row, Col, Container } from "react-bootstrap";
 
-const URL = "https://striveschool-api.herokuapp.com/api/profile/me";
-const authorization = `eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2ODA3NjdiMWQ0NTE4MTAwMTVjZTgzZDgiLCJpYXQiOjE3NDUzMTU3NjIsImV4cCI6MTc0NjUyNTM2Mn0.OWx9zeZE9btF7nPn_CDpHjse4Frk6cxi9iNO3EctW9A`;
-
 const Esperienze = () => {
-  const dispatch = useDispatch();
   const profile = useSelector((state) => state.profile.profile); // Accedi direttamente al profilo
-
-  useEffect(() => {
-    fetch(URL, {
-      headers: {
-        Authorization: `Bearer ${authorization}`,
-      },
-    })
-      .then((response) => {
-        if (!response.ok) {
-          throw new Error("Errore nella fetch");
-        }
-        return response.json();
-      })
-      .then((data) => {
-        dispatch(setProfile(data)); // Salva direttamente i dati del profilo
-        console.log("Dati del profilo:", data);
-      })
-      .catch((error) => {
-        console.error("Errore:", error);
-      });
-  }, [dispatch]);
 
   return (
     <div
