@@ -1,10 +1,32 @@
+import { Row, Col } from "react-bootstrap";
+
 const Formazione = function () {
   return (
     <div
-      className="border border-secondary rounded-2 p-3"
-      style={{ backgroundColor: "#FFFFFF" }}
+      className="border border-2 rounded-2 p-3"
+      style={{ backgroundColor: "#FFFFFF", borderColor: "#D2D2D2" }}
     >
-      <h1>Formazione</h1>
+      <div className="d-flex justify-content-between align-items-center">
+        <h1>Formazione</h1>
+        <div>
+          <Row className="d-flex align-items-center gap-2">
+            <Col>
+              <i
+                className="bi bi-plus-lg text-black"
+                onClick={() => console.log("Plus icon clicked")}
+                style={{ cursor: "pointer" }}
+              ></i>
+            </Col>
+            <Col>
+              <i
+                className="bi bi-pencil text-black"
+                onClick={() => console.log("Pencil icon clicked")}
+                style={{ cursor: "pointer" }}
+              ></i>
+            </Col>
+          </Row>
+        </div>
+      </div>
       <div className="d-flex border-bottom border-secondary">
         <div>
           <img

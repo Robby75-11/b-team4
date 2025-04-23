@@ -31,12 +31,12 @@ function App() {
             <Formazione />
             <Lingue />
             <Competenze />
-            <Footer />
           </div>
           <div className="col-3 d-none d-sm-block">
             <SideBar />
           </div>
         </div>
+        <Footer />
       </Container>
     </>
   );
