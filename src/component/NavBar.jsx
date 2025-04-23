@@ -236,11 +236,11 @@ function NavBar() {
                 Nome Profilo
               </Nav.Link>
               <Button
-                variant="white"
-                className="text-black btn-outline-secondary bg-white"
+                variant="primary"
+                className="text-white btn-outline-primary"
                 style={{ borderRadius: 32 }}
               >
-                Risorse
+                Disponibile per
               </Button>
 
               <Button
@@ -252,11 +252,11 @@ function NavBar() {
               </Button>
 
               <Button
-                variant="primary"
-                className="text-white btn-outline-primary"
+                variant="white"
+                className="text-black btn-outline-secondary bg-white"
                 style={{ borderRadius: 32 }}
               >
-                Disponibile per
+                Risorse
               </Button>
             </Nav>
           </Container>

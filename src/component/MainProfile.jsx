@@ -40,7 +40,10 @@ const MainProfile = function () {
   }, [dispatch]);
 
   return (
-    <Card className="position-relative m-1 shadow-sm border border-secondary rounded-3">
+    <Card
+      className="position-relative  shadow-sm  border border-2 rounded-2 "
+      style={{ borderColor: "#D2D2D2" }}
+    >
       <div className="image-container-left">
         <img
           src={profile.image || Profilo}
@@ -70,12 +73,12 @@ const MainProfile = function () {
             </Card.Text>
             <Card.Text className="text-primary">
               <a href="#" className=" text-decoration-none ">
-                n° collegamenti {Math.floor(Math.random() * 101)}
+                {Math.floor(Math.random() * 101)} collegamenti
               </a>
             </Card.Text>
           </Col>
           <Col sx={4}>
-            <div className="d-flex mt-5 ms-4">
+            <div className="d-flex mt-5 pt-5 ms-4">
               <div>
                 <img
                   src="https://media.licdn.com/dms/image/v2/C4E0BAQFKOkXzr7_7dQ/company-logo_200_200/company-logo_200_200/0/1679997075169/resultconsulting_logo?e=2147483647&v=beta&t=NU8mvoBLmgDrYK3i1K03_P02bljk6LrQmD4y1cOcQBs"
@@ -92,12 +95,13 @@ const MainProfile = function () {
         </Row>
         <div className="mt-2 mb-2">
           <Button
-            variant="white"
-            className="text-black btn-outline-secondary me-2 mt-2 bg-white"
+            variant="primary"
+            className="text-white btn-outline-primary me-2 mt-2 "
             style={{ borderRadius: 32 }}
           >
-            Risorse
+            Disponibile per
           </Button>
+
           <Button
             variant="secondary"
             className="text-primary btn-outline-primary me-2 mt-2 bg-white"
@@ -114,7 +118,7 @@ const MainProfile = function () {
           </Button>
           <Button
             variant="white"
-            className="text-primary btn-outline-primary me-2 mt-2 bg-white"
+            className="text-black btn-outline-secondary me-2 mt-2 bg-white"
             style={{ borderRadius: 32 }}
           >
             Risorse
