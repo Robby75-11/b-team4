@@ -17,15 +17,15 @@ import { useState, useEffect } from "react";
 function NavBar() {
   const [showSecondNav, setShowSecondNav] = useState(false);
 
-  useEffect(() => {
-    const handleScroll = () => {
-      if (window.scrollY > 450) {
-        setShowSecondNav(true);
-      } else {
-        setShowSecondNav(false);
-      }
-    };
+  const handleScroll = () => {
+    if (window.scrollY > 450) {
+      setShowSecondNav(true);
+    } else {
+      setShowSecondNav(false);
+    }
+  };
 
+  useEffect(() => {
     window.addEventListener("scroll", handleScroll);
     return () => {
       window.removeEventListener("scroll", handleScroll);
