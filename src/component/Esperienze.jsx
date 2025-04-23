@@ -124,7 +124,8 @@ const Esperienze = () => {
                     "https://icon2.cleanpng.com/lnd/20240918/us/95fa3f338924288ba0d02cc7c9e561.webp"
                   }
                   alt="Logo Aziendale"
-                  className="w-100"
+                  style={{ height: "80px", width: "80px" }}
+                  className="me-3 mt-3"
                 />
               </div>
               <div className="mt-3 lh-1 w-100">
