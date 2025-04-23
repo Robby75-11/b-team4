@@ -114,41 +114,47 @@ const Esperienze = () => {
       </div>
 
       <Row>
-        {esperienze.map((esperienza, index) => (
-          <Col xs={12} className="mb-3" key={index}>
-            <div className="d-flex border-bottom border-secondary">
-              <div>
-                <img
-                  src={
-                    esperienza.image ||
-                    "https://icon2.cleanpng.com/lnd/20240918/us/95fa3f338924288ba0d02cc7c9e561.webp"
-                  }
-                  alt="Logo Aziendale"
-                  style={{ height: "80px", width: "80px" }}
-                  className="me-3 mt-3"
-                />
-              </div>
-              <div className="mt-3 lh-1 w-100">
-                <div className="d-flex justify-content-between">
-                  <p className="fw-bold">{esperienza.role}</p>
-                  <i
-                    className="bi bi-pencil text-black"
-                    onClick={() => handleEditExperience(esperienza)}
-                    style={{ cursor: "pointer" }}
-                  ></i>
-                </div>
-                <p>{esperienza.company}</p>
-                <p className="text-secondary">
-                  {new Date(esperienza.startDate).toLocaleDateString()} -{" "}
-                  {esperienza.endDate
-                    ? new Date(esperienza.endDate).toLocaleDateString()
-                    : "Presente"}
-                </p>
-                <div className="fw-bold">{esperienza.area}</div>
-              </div>
-            </div>
+        {esperienze.length === 0 ? (
+          <Col xs={12}>
+            <p className="text-muted fst-italic">Nessuna esperienza presente</p>
           </Col>
-        ))}
+        ) : (
+          esperienze.map((esperienza, index) => (
+            <Col xs={12} className="mb-3" key={index}>
+              <div className="d-flex border-bottom border-secondary">
+                <div>
+                  <img
+                    src={
+                      esperienza.image ||
+                      "https://icon2.cleanpng.com/lnd/20240918/us/95fa3f338924288ba0d02cc7c9e561.webp"
+                    }
+                    alt="Logo Aziendale"
+                    style={{ height: "80px", width: "80px" }}
+                    className="me-3 mt-3"
+                  />
+                </div>
+                <div className="mt-3 lh-1 w-100">
+                  <div className="d-flex justify-content-between">
+                    <p className="fw-bold">{esperienza.role}</p>
+                    <i
+                      className="bi bi-pencil text-black"
+                      onClick={() => handleEditExperience(esperienza)}
+                      style={{ cursor: "pointer" }}
+                    ></i>
+                  </div>
+                  <p>{esperienza.company}</p>
+                  <p className="text-secondary">
+                    {new Date(esperienza.startDate).toLocaleDateString()} -{" "}
+                    {esperienza.endDate
+                      ? new Date(esperienza.endDate).toLocaleDateString()
+                      : "Presente"}
+                  </p>
+                  <div className="fw-bold">{esperienza.area}</div>
+                </div>
+              </div>
+            </Col>
+          ))
+        )}
       </Row>
 
       <Modal show={showModal} onHide={handleCloseModal}>
