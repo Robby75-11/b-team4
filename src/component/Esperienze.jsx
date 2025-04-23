@@ -112,7 +112,7 @@ const Esperienze = () => {
             <Col>
               <i
                 className="bi bi-pencil text-black"
-                onClick={() => console.log("Pencil icon clicked")}
+                onClick={handleShowModal}
                 style={{ cursor: "pointer" }}
               ></i>
             </Col>
