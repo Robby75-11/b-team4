@@ -23,7 +23,7 @@ const Messaggi = () => {
         isVisible ? "p-3" : "p-1"
       }`}
       style={{
-        width: isVisible ? "350px" : "250px",
+        width: isVisible ? "400px" : "250px",
         height: isVisible ? "450px" : "50px",
         transition: "all 0.3s ease",
       }}
