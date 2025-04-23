@@ -11,7 +11,7 @@ import Competenze from "./component/Competenze";
 import Formazione from "./component/Formazione";
 import Lingue from "./component/Lingue";
 import SideBar from "./component/SideBar";
-import Messaggi from "./component/messaggi";
+import messaggi from "./component/messaggi";
 
 function App() {
   return (
