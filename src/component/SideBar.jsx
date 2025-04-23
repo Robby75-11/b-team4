@@ -64,7 +64,7 @@ const SideBar = () => {
           <ListGroup.Item className="d-flex justify-content-between align-items-center">
             <div>
               <h6 className="mb-0">Lingua del profilo</h6>
-              <small className="text-muted">Italiano</small>
+              <p className="text-muted">Italiano</p>
             </div>
             <Pencil
               size={20}
@@ -75,9 +75,9 @@ const SideBar = () => {
           <ListGroup.Item className="d-flex justify-content-between align-items-center">
             <div>
               <h6 className="mb-0">Profilo pubblico e URL</h6>
-              <small className="text-muted">
+              <p className="text-muted">
                 www.linkedin.com/in/alessandro-di-benedetto-a40b572aa
-              </small>
+              </p>
             </div>
             <Pencil
               size={20}
