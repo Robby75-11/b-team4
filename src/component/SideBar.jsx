@@ -9,9 +9,6 @@ import {
   Button,
   Image,
 } from "react-bootstrap";
-import { Link } from "react-router-dom";
-import enelLogo from "../assets/enel D.png";
-import linkedinLogo from "../assets/logo linkedn.png";
 import { Pencil, SendFill, PersonPlusFill } from "react-bootstrap-icons";
 
 const SideBar = () => {
@@ -90,11 +87,11 @@ const SideBar = () => {
           </ListGroup.Item>
         </ListGroup>
       </Card>
-      {/* parte iniziale */}
+
       <Card className="mb-3">
         <Card.Header>
           <h6 className="mb-0">Altri profili consultati</h6>
-          <small className="text-muted">Solo per te</small>
+          <p className="text-muted">Solo per te</p>
         </Card.Header>
         <ListGroup variant="flush">
           <ListGroup.Item>
@@ -112,9 +109,9 @@ const SideBar = () => {
                   Gaia Tripi <span className="text-primary fw-normal">in</span>{" "}
                   <span className="text-muted">• 1°</span>
                 </h6>
-                <small className="text-muted text-truncate">
+                <p className="text-muted text-truncate">
                   Dottoressa in Lettere e Comunicazione..
-                </small>
+                </p>
               </Col>
             </Row>
             <Button variant="outline-primary" size="sm" className="mt-2">
@@ -135,9 +132,9 @@ const SideBar = () => {
                 <h6 className="mb-0">
                   Andrea Morgana <span className="text-muted">• 1°</span>
                 </h6>
-                <small className="text-muted text-truncate">
+                <p className="text-muted text-truncate">
                   Fotografo, Videomaker, Content Creator
-                </small>
+                </p>
               </Col>
             </Row>
             <Button variant="outline-primary" size="sm" className="mt-2">

@@ -11,7 +11,6 @@ import Competenze from "./component/Competenze";
 import Formazione from "./component/Formazione";
 import Lingue from "./component/Lingue";
 import SideBar from "./component/SideBar";
-import Messaggi from "./component/messsaggi";
 
 function App() {
   return (
@@ -26,7 +25,7 @@ function App() {
       >
         <div className="row">
           <div
-            className="col-12 col-md-9"
+            className="col-12 col-lg-9"
             style={{ display: "flex", flexDirection: "column", gap: 10 }}
           >
             <MainProfile />
@@ -35,14 +34,11 @@ function App() {
             <Lingue />
             <Competenze />
           </div>
-          <div className="col-3 d-none d-sm-block">
+          <div className="col-lg-3 d-none d-lg-block">
             <SideBar />
           </div>
         </div>
 
-        <div>
-          <Messaggi />
-        </div>
         <Footer />
       </Container>
     </>
