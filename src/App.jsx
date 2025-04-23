@@ -11,7 +11,7 @@ import Competenze from "./component/Competenze";
 import Formazione from "./component/Formazione";
 import Lingue from "./component/Lingue";
 import SideBar from "./component/SideBar";
-import messaggi from "./component/messaggi";
+import Messaggi from "./component/Messaggi";
 
 function App() {
   return (
@@ -39,7 +39,9 @@ function App() {
             <SideBar />
           </div>
         </div>
-
+        <div>
+          <Messaggi />
+        </div>
         <Footer />
       </Container>
     </>
