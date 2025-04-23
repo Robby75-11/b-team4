@@ -58,11 +58,11 @@ const MainProfile = function () {
         </Row>
         <div className="mt-2 mb-2">
           <Button
-            variant="primary"
-            className="text-white btn-outline-primary me-2 mt-2"
+            variant="white"
+            className="text-black btn-outline-secondary me-2 mt-2 bg-white"
             style={{ borderRadius: 32 }}
           >
-            Disponibile per
+            Risorse
           </Button>
           <Button
             variant="secondary"
