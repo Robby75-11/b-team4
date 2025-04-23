@@ -11,6 +11,7 @@ const Esperienze = () => {
   const profile = useSelector((state) => state.profile.profile); // Accedi direttamente al profilo
   const [esperienze, setEsperienze] = useState([]); // Stato per salvare le esperienze
   const [showModal, setShowModal] = useState(false); // Stato per gestire il modale
+  const [selectedExperienceId, setSelectedExperienceId] = useState(null);
   const [addEsperienza, setAddEsperienza] = useState({
     role: "",
     company: "",
@@ -26,73 +27,78 @@ const Esperienze = () => {
         Authorization: authorization,
       },
     })
-      .then((response) => {
-        if (!response.ok) {
-          throw new Error("Errore nella fetch");
-        }
-        return response.json();
-      })
-      .then((data) => {
-        setEsperienze(data); // Salva i dati nello stato
-        console.log("Esperienze recuperate:", data);
-      })
-      .catch((error) => {
-        console.error("Errore:", error);
-      });
+      .then((res) => res.json())
+      .then(setEsperienze)
+      .catch(console.error);
   };
 
-  // Fetch delle esperienze al caricamento del componente
   useEffect(() => {
     fetchEsperienze();
   }, []);
 
-  // Funzione per gestire l'apertura del modale
-  const handleShowModal = () => setShowModal(true);
+  const handleShowModal = () => {
+    setAddEsperienza({
+      role: "",
+      company: "",
+      startDate: "",
+      endDate: "",
+      description: "",
+      area: "",
+    });
+    setSelectedExperienceId(null);
+    setShowModal(true);
+  };
 
-  // Funzione per gestire la chiusura del modale
-  const handleCloseModal = () => setShowModal(false);
+  const handleCloseModal = () => {
+    setShowModal(false);
+    setSelectedExperienceId(null);
+  };
 
-  // Funzione per gestire il cambiamento dei campi del form
   const handleInputChange = (e) => {
     const { name, value } = e.target;
     setAddEsperienza({ ...addEsperienza, [name]: value });
   };
 
-  // Funzione per inviare la chiamata POST
+  const handleEditExperience = (exp) => {
+    setAddEsperienza({
+      role: exp.role || "",
+      company: exp.company || "",
+      startDate: exp.startDate ? exp.startDate.slice(0, 10) : "",
+      endDate: exp.endDate ? exp.endDate.slice(0, 10) : "",
+      description: exp.description || "",
+      area: exp.area || "",
+    });
+    setSelectedExperienceId(exp._id);
+    setShowModal(true);
+  };
+
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    // Formatta i dati prima di inviarli
     const formattedExperience = {
       ...addEsperienza,
       endDate: addEsperienza.endDate || null,
     };
 
-    console.log("Dati inviati:", formattedExperience);
+    const method = selectedExperienceId ? "PUT" : "POST";
+    const url = selectedExperienceId ? `${URL}/${selectedExperienceId}` : URL;
 
-    fetch(URL, {
-      method: "POST",
+    fetch(url, {
+      method,
       headers: {
         "Content-Type": "application/json",
         Authorization: authorization,
       },
       body: JSON.stringify(formattedExperience),
     })
-      .then((response) => {
-        if (!response.ok) {
-          throw new Error("Errore nella fetch");
-        }
-        return response.json();
+      .then((res) => res.json())
+      .then(() => {
+        fetchEsperienze();
+        handleCloseModal();
       })
-      .then((data) => {
-        console.log("Esperienza aggiunta:", data);
-        fetchEsperienze(); // Aggiorna la lista delle esperienze
-        handleCloseModal(); // Chiudi il modale
-      })
-      .catch((error) => {
-        console.error("Errore:", error);
-      });
+      .catch(console.error);
   };
+
   return (
     <div
       className="border border-2 rounded-2 p-3"
@@ -100,146 +106,70 @@ const Esperienze = () => {
     >
       <div className="d-flex justify-content-between align-items-center">
         <h1>Esperienze</h1>
-        <div>
-          <Row className="d-flex align-items-center gap-2">
-            <Col>
-              <i
-                className="bi bi-plus-lg text-black"
-                onClick={handleShowModal}
-                style={{ cursor: "pointer" }}
-              ></i>
-            </Col>
-            <Col>
-              <i
-                className="bi bi-pencil text-black"
-                onClick={() => console.log("Pencil icon clicked")}
-                style={{ cursor: "pointer" }}
-              ></i>
-            </Col>
-          </Row>
-        </div>
+        <i
+          className="bi bi-plus-lg text-black"
+          onClick={handleShowModal}
+          style={{ cursor: "pointer" }}
+        ></i>
       </div>
+
       <Row>
-        {esperienze.length === 0 ? (
-          <div className="d-flex border-bottom border-secondary">
-            <div>
-              <img
-                src={profile.image || "placeholder.jpg"}
-                alt="Company Logo"
-                style={{ height: "80px", width: "80px" }}
-                className="me-3 mt-3"
-              />
-            </div>
-            <div className="mt-3 lh-1">
-              <p className="fw-bold">
-                {profile.title || "Titolo non disponibile"}
-              </p>
-              <p>Azienda</p>
-              <p className="text-secondary">
-                {new Date(profile.createdAt).toLocaleDateString() ||
-                  "Data creazione non disponibile"}{" "}
-                -{" "}
-                {new Date(profile.updatedAt).toLocaleDateString() ||
-                  "Data aggiornamento non disponibile"}
-              </p>
-              <div className="fw-bold mt-5 mb-4">
-                {profile.area || "Area non disponibile"}
-              </div>
-            </div>
-          </div>
-        ) : (
-          /* <Col xs={12} className="mb-3">
-            <Row>
-              <Col xs={2}>
+        {esperienze.map((esperienza, index) => (
+          <Col xs={12} className="mb-3" key={index}>
+            <div className="d-flex border-bottom border-secondary">
+              <div>
                 <img
-                  src={profile.image || "placeholder.jpg"}
-                  alt="Company Logo"
+                  src={esperienza.image || "https://via.placeholder.com/80"}
+                  alt="Logo"
                   style={{ height: "80px", width: "80px" }}
                   className="me-3 mt-3"
                 />
-              </Col>
-
-              <Col xs={9}>
-                <h5 className="text-black">
-                  {profile.title || "Titolo non disponibile"}
-                </h5>
-                <p>azienda</p>
-                <p>
-                  {new Date(profile.createdAt).toLocaleDateString() ||
-                    "Data creazione non disponibile"}{" "}
-                  -{" "}
-                  {new Date(profile.updatedAt).toLocaleDateString() ||
-                    "Data aggiornamento non disponibile"}
-                </p>
-                <p>{profile.area || "Area non disponibile"}</p>
-              </Col>
-            </Row>
-          </Col>*/
-          esperienze.map((esperienza, index) => (
-            <Col xs={12} className="mb-3" key={index}>
-              <div className="d-flex border-bottom border-secondary">
-                <div>
-                  <img
-                    src={
-                      esperienza.image ||
-                      "https://icon2.cleanpng.com/lnd/20240918/us/95fa3f338924288ba0d02cc7c9e561.webp"
-                    }
-                    alt="Company Logo"
-                    style={{ height: "80px", width: "80px" }}
-                    className="me-3 mt-3"
-                  />
-                </div>
-
-                <div className="mt-3 lh-1">
-                  <p className="fw-bold">
-                    {esperienza.role || "Ruolo non disponibile"}
-                  </p>
-                  <p>{esperienza.company || "Azienda non disponibile"}</p>
-                  <p className="text-secondary">
-                    {new Date(esperienza.startDate).toLocaleDateString() ||
-                      "Data inizio non disponibile"}{" "}
-                    -{" "}
-                    {esperienza.endDate
-                      ? new Date(esperienza.endDate).toLocaleDateString()
-                      : "Presente"}
-                  </p>
-                  <div className="fw-bold mt-5 mb-4">
-                    {esperienza.area || "Area non disponibile"}
-                  </div>
-                </div>
               </div>
-            </Col>
-          ))
-        )}
+              <div className="mt-3 lh-1 w-100">
+                <div className="d-flex justify-content-between">
+                  <p className="fw-bold">{esperienza.role}</p>
+                  <i
+                    className="bi bi-pencil text-black"
+                    onClick={() => handleEditExperience(esperienza)}
+                    style={{ cursor: "pointer" }}
+                  ></i>
+                </div>
+                <p>{esperienza.company}</p>
+                <p className="text-secondary">
+                  {new Date(esperienza.startDate).toLocaleDateString()} -{" "}
+                  {esperienza.endDate
+                    ? new Date(esperienza.endDate).toLocaleDateString()
+                    : "Presente"}
+                </p>
+                <div className="fw-bold">{esperienza.area}</div>
+              </div>
+            </div>
+          </Col>
+        ))}
       </Row>
 
-      {/* Modale per aggiungere una nuova esperienza */}
       <Modal show={showModal} onHide={handleCloseModal}>
         <Modal.Header closeButton>
-          <Modal.Title>Aggiungi Esperienza</Modal.Title>
+          <Modal.Title>
+            {selectedExperienceId ? "Modifica" : "Aggiungi"} Esperienza
+          </Modal.Title>
         </Modal.Header>
         <Modal.Body>
           <Form onSubmit={handleSubmit}>
-            <Form.Group className="mb-3">
-              <Form.Label>Ruolo</Form.Label>
-              <Form.Control
-                type="text"
-                placeholder="Inserisci il ruolo"
-                name="role"
-                value={addEsperienza.role}
-                onChange={handleInputChange}
-              />
-            </Form.Group>
-            <Form.Group className="mb-3">
-              <Form.Label>Azienda</Form.Label>
-              <Form.Control
-                type="text"
-                placeholder="Inserisci il nome dell'azienda"
-                name="company"
-                value={addEsperienza.company}
-                onChange={handleInputChange}
-              />
-            </Form.Group>
+            {["role", "company", "description", "area"].map((field) => (
+              <Form.Group className="mb-3" key={field}>
+                <Form.Label>
+                  {field.charAt(0).toUpperCase() + field.slice(1)}
+                </Form.Label>
+                <Form.Control
+                  type="text"
+                  placeholder={`Inserisci ${field}`}
+                  name={field}
+                  value={addEsperienza[field]}
+                  onChange={handleInputChange}
+                />
+              </Form.Group>
+            ))}
             <Form.Group className="mb-3">
               <Form.Label>Data di Inizio</Form.Label>
               <Form.Control
@@ -258,29 +188,8 @@ const Esperienze = () => {
                 onChange={handleInputChange}
               />
             </Form.Group>
-            <Form.Group className="mb-3">
-              <Form.Label>Descrizione</Form.Label>
-              <Form.Control
-                as="textarea"
-                rows={3}
-                placeholder="Inserisci una descrizione"
-                name="description"
-                value={addEsperienza.description}
-                onChange={handleInputChange}
-              />
-            </Form.Group>
-            <Form.Group className="mb-3">
-              <Form.Label>Area</Form.Label>
-              <Form.Control
-                type="text"
-                placeholder="Inserisci l'area"
-                name="area"
-                value={addEsperienza.area}
-                onChange={handleInputChange}
-              />
-            </Form.Group>
             <Button variant="primary" type="submit">
-              Salva
+              {selectedExperienceId ? "Aggiorna" : "Salva"}
             </Button>
           </Form>
         </Modal.Body>
