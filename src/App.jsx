@@ -39,6 +39,10 @@ function App() {
             <SideBar />
           </div>
         </div>
+
+        <div>
+          <Messaggi />
+        </div>
         <Footer />
       </Container>
     </>
