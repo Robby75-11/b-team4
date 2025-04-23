@@ -3,10 +3,13 @@ import { Card, ListGroup, ButtonGroup, Row, Col } from "react-bootstrap";
 
 const Competenze = () => {
   return (
-    <Card style={{ width: "100%", padding: "20px" }}>
-      <Card.Header className="d-flex justify-content-between align-items-center">
-        <h2>Competenze</h2>
-        <ButtonGroup>
+    <div
+      className="border border-2 rounded-2 p-3 bg-white"
+      style={{ borderColor: "#D2D2D2" }}
+    >
+      <div className="d-flex justify-content-between align-items-center">
+        <h1>Competenze</h1>
+        <div>
           <Row className="d-flex align-items-center gap-2">
             <Col>
               <i
@@ -23,15 +26,29 @@ const Competenze = () => {
               ></i>
             </Col>
           </Row>
-        </ButtonGroup>
-      </Card.Header>
-      <ListGroup variant="flush">
-        <ListGroup.Item>HTML</ListGroup.Item>
-        <ListGroup.Item>CSS</ListGroup.Item>
-        <ListGroup.Item>JavaScript</ListGroup.Item>
-        <ListGroup.Item>React</ListGroup.Item>
-      </ListGroup>
-    </Card>
+        </div>
+      </div>
+      <div className=" border-bottom border-secondary">
+        <div className="mt-3 lh-1">
+          <p className="fw-bold">HTML</p>
+        </div>
+      </div>
+      <div className=" border-bottom border-secondary">
+        <div className="mt-3 lh-1">
+          <p className="fw-bold">CSS</p>
+        </div>
+      </div>
+      <div className=" border-bottom border-secondary">
+        <div className="mt-3 lh-1">
+          <p className="fw-bold">JavaScript</p>
+        </div>
+      </div>
+      <div>
+        <div className="mt-3 lh-1">
+          <p className="fw-bold">React</p>
+        </div>
+      </div>
+    </div>
   );
 };
 
