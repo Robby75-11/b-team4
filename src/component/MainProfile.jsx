@@ -1,4 +1,4 @@
-import { Card, Col, Container, Row, Button } from "react-bootstrap";
+import { Card, Col, Form, Row, Button } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
 import { setProfile } from "../redux/actions";
 import { useEffect } from "react";
@@ -11,32 +11,59 @@ const Copertina =
 
 const URL = "https://striveschool-api.herokuapp.com/api/profile/me";
 
-const authorization = `eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2ODA3NjdiMWQ0NTE4MTAwMTVjZTgzZDgiLCJpYXQiOjE3NDUzOTgxODYsImV4cCI6MTc0NjYwNzc4Nn0.hQJA7Fri0PEaMrJQ5Jsd9c_ucAmS_bVgv0BzVjV1tFo`;
+const authorization =
+  "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2ODA3NjdiMWQ0NTE4MTAwMTVjZTgzZDgiLCJpYXQiOjE3NDUzOTgxODYsImV4cCI6MTc0NjYwNzc4Nn0.hQJA7Fri0PEaMrJQ5Jsd9c_ucAmS_bVgv0BzVjV1tFo";
 
 const MainProfile = function () {
   const profile = useSelector((state) => state.profile.profile);
 
   const dispatch = useDispatch();
+  const uploadProfileImage = (file) => {
+    const formData = new FormData();
+    formData.append("profile", file);
+
+    fetch(
+      `https://striveschool-api.herokuapp.com/api/profile/${profile._id}/picture`,
+      {
+        method: "POST",
+        headers: {
+          Authorization: authorization,
+        },
+        body: formData,
+      }
+    )
+      .then((res) => {
+        if (!res.ok) {
+          throw new Error("Errore nel caricamento dell'immagine");
+        }
+        return res.json();
+      })
+      .then((data) => {
+        console.log("Immagine caricata con successo:", data);
+        // Ricarica il profilo per aggiornare l'immagine
+        return fetch(URL, {
+          headers: { Authorization: authorization },
+        });
+      })
+      .then((response) => response.json())
+      .then((updatedProfile) => {
+        dispatch(setProfile(updatedProfile));
+      })
+      .catch((err) => console.error(err));
+  };
 
   useEffect(() => {
     fetch(URL, {
-      headers: {
-        Authorization: `Bearer ${authorization}`,
-      },
+      headers: { Authorization: authorization },
     })
-      .then((response) => {
-        if (!response.ok) {
-          throw new Error("Errore nella fetch");
-        }
-        return response.json();
+      .then((res) => {
+        if (!res.ok) throw new Error("Errore nella fetch");
+        return res.json();
       })
       .then((data) => {
         dispatch(setProfile(data));
-        console.log("Dati del profilo:", data);
       })
-      .catch((error) => {
-        console.error("Errore:", error);
-      });
+      .catch((error) => console.error("Errore:", error));
   }, [dispatch]);
 
   return (
@@ -49,6 +76,11 @@ const MainProfile = function () {
           src={profile.image || Profilo}
           className="profile-image"
           alt="profile"
+        />
+        <Form.Control
+          type="file"
+          onChange={(e) => uploadProfileImage(e.target.files[0])}
+          className="mt-2"
         />
       </div>
       <Card.Img

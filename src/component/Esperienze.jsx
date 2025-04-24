@@ -138,7 +138,27 @@ const Esperienze = () => {
       })
       .catch(console.error);
   };
+  const handleImageUpload = (file, expId) => {
+    const formData = new FormData();
+    formData.append("experience", file);
 
+    fetch(
+      `https://striveschool-api.herokuapp.com/api/profile/680767b1d451810015ce83d8/experiences/${expId}/picture`,
+      {
+        method: "POST",
+        headers: {
+          Authorization: authorization,
+        },
+        body: formData,
+      }
+    )
+      .then((res) => {
+        if (!res.ok) throw new Error("Errore upload immagine");
+        return res.json();
+      })
+      .then(() => fetchEsperienze())
+      .catch((err) => console.error("Errore durante l'upload:", err));
+  };
   return (
     <div
       className="border border-2 rounded-2 p-3"
@@ -169,9 +189,24 @@ const Esperienze = () => {
                       "https://icon2.cleanpng.com/lnd/20240918/us/95fa3f338924288ba0d02cc7c9e561.webp"
                     }
                     alt="Logo Aziendale"
-                    style={{ height: "80px", width: "80px" }}
-                    className="me-3 mt-3"
+                    style={{
+                      height: "80px",
+                      width: "80px",
+                      objectFit: "cover",
+                    }}
+                    className="me-3 mt-3 rounded"
                   />
+                  <Form.Group
+                    controlId={`upload-${esperienza._id}`}
+                    className="mt-2"
+                  >
+                    <Form.Control
+                      type="file"
+                      onChange={(e) =>
+                        handleImageUpload(e.target.files[0], esperienza._id)
+                      }
+                    />
+                  </Form.Group>
                 </div>
                 <div className="mt-3 lh-1 w-100">
                   <div className="d-flex justify-content-between">
