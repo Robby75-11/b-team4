@@ -1,7 +1,8 @@
-import { Card, Col, Form, Row, Button } from "react-bootstrap";
+import React, { useEffect, useState } from "react";
+import { Card, Col, Form, Row, Button, Modal } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
+import { PencilSquare } from "react-bootstrap-icons";
 import { setProfile } from "../redux/actions";
-import { useEffect } from "react";
 
 const Profilo =
   "https://cdn.calciomercato.com/images/2019-05/Whatsapp.senza.immagine.2019.1400x840.jpg";
@@ -14,6 +15,8 @@ const authorization = `bearer `;
 const MainProfile = ({ userId }) => {
   const profile = useSelector((state) => state.profile.profile);
   const dispatch = useDispatch();
+  const [selectedImage, setSelectedImage] = useState(null); // Stato per l'immagine selezionata
+  const [showModal, setShowModal] = useState(false); // Stato per il modale
 
   const fetchProfile = (id) => {
     const URL = `https://striveschool-api.herokuapp.com/api/profile/${id}`;
@@ -30,36 +33,73 @@ const MainProfile = ({ userId }) => {
       .catch((error) => console.error("Errore:", error));
   };
 
+  const handleImageUpload = (e) => {
+    e.preventDefault();
+
+    if (!selectedImage) {
+      console.error("Nessuna immagine selezionata");
+      return;
+    }
+
+    const URL = `https://striveschool-api.herokuapp.com/api/profile/${userId}/picture`;
+
+    const formData = new FormData();
+    formData.append("profile", selectedImage); // Aggiungi l'immagine al FormData
+
+    fetch(URL, {
+      method: "POST",
+      headers: {
+        Authorization: authorization,
+      },
+      body: formData,
+    })
+      .then((res) => {
+        if (!res.ok) {
+          throw new Error("Errore durante il caricamento dell'immagine");
+        }
+        return res.json();
+      })
+      .then(() => {
+        fetchProfile(userId); // Aggiorna il profilo dopo il caricamento
+        setShowModal(false); // Chiudi il modale
+      })
+      .catch((err) => console.error("Errore:", err));
+  };
+
   useEffect(() => {
     fetchProfile(userId); // Recupera il profilo in base all'ID
-  }, [userId]); // Esegui la fetch ogni volta che cambia l'ID
+  }, [userId]);
 
   return (
-    <Card
-      className="position-relative shadow-sm border border-2 rounded-2"
-      style={{ borderColor: "#D2D2D2" }}
-    >
-      <div className="image-container-left">
-        <img
-          src={profile.image || Profilo}
-          className="profile-image"
-          alt="profile"
-        />
-        <Form.Control
-          type="file"
-          onChange={(e) => uploadProfileImage(e.target.files[0])}
-          className="mt-2"
-        />
-      </div>
+    <Card className="shadow-sm border border-2 rounded-2">
       <Card.Img
         variant="top"
         src={Copertina}
         style={{ height: "200px", objectFit: "cover" }}
       />
       <Card.Body>
-        <Row>
-          <Col sx={8}>
-            <Card.Title className="mt-5 fs-3">
+        <Row className="align-items-center">
+          <Col xs={12} md={4} className="text-center position-relative">
+            <img
+              src={profile.image || Profilo}
+              alt="profile"
+              className="rounded-circle"
+              style={{ width: "150px", height: "150px", objectFit: "cover" }}
+            />
+            {/* Icona matita per aprire il modale */}
+            <PencilSquare
+              className="position-absolute"
+              style={{
+                top: "10px",
+                right: "10px",
+                fontSize: "1.5rem",
+                cursor: "pointer",
+              }}
+              onClick={() => setShowModal(true)} // Mostra il modale
+            />
+          </Col>
+          <Col xs={12} md={8}>
+            <Card.Title className="fs-3">
               {`${profile.name || "Nome non disponibile"} ${
                 profile.surname || ""
               }`}
@@ -67,18 +107,31 @@ const MainProfile = ({ userId }) => {
             <Card.Text>{profile.bio || "Biografia non disponibile"}</Card.Text>
             <Card.Text className="text-secondary">
               {profile.area || "Area non disponibile"}
-              <a href="#" className="text-decoration-none d-block">
-                Informazioni di contatto
-              </a>
-            </Card.Text>
-            <Card.Text className="text-primary">
-              <a href="#" className="text-decoration-none">
-                {Math.floor(Math.random() * 101)} collegamenti
-              </a>
             </Card.Text>
           </Col>
         </Row>
       </Card.Body>
+
+      {/* Modale per il caricamento dell'immagine */}
+      <Modal show={showModal} onHide={() => setShowModal(false)}>
+        <Modal.Header closeButton>
+          <Modal.Title>Carica una nuova immagine</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          <Form onSubmit={handleImageUpload}>
+            <Form.Group controlId="formFile">
+              <Form.Label>Seleziona un'immagine</Form.Label>
+              <Form.Control
+                type="file"
+                onChange={(e) => setSelectedImage(e.target.files[0])} // Aggiorna lo stato
+              />
+            </Form.Group>
+            <Button variant="primary" type="submit" className="mt-3">
+              Carica Immagine
+            </Button>
+          </Form>
+        </Modal.Body>
+      </Modal>
     </Card>
   );
 };
