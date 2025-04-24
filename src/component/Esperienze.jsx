@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Row, Col, Modal, Button, Form } from "react-bootstrap";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 
 const URL =
   "https://striveschool-api.herokuapp.com/api/profile/680767b1d451810015ce83d8/experiences";
@@ -8,9 +8,10 @@ const authorization =
   "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2ODA3NjdiMWQ0NTE4MTAwMTVjZTgzZDgiLCJpYXQiOjE3NDUzOTgxODYsImV4cCI6MTc0NjYwNzc4Nn0.hQJA7Fri0PEaMrJQ5Jsd9c_ucAmS_bVgv0BzVjV1tFo";
 
 const Esperienze = () => {
-  const profile = useSelector((state) => state.profile.profile); // Accedi direttamente al profilo
-  const [esperienze, setEsperienze] = useState([]); // Stato per salvare le esperienze
-  const [showModal, setShowModal] = useState(false); // Stato per gestire il modale
+  const profile = useSelector((state) => state.profile.profile);
+  const dispatch = useDispatch();
+  const [esperienze, setEsperienze] = useState([]);
+  const [showModal, setShowModal] = useState(false);
   const [selectedExperienceId, setSelectedExperienceId] = useState(null);
   const [addEsperienza, setAddEsperienza] = useState({
     role: "",
@@ -19,7 +20,7 @@ const Esperienze = () => {
     endDate: "",
     description: "",
     area: "",
-  }); // Stato per i dati del form
+  });
 
   const fetchEsperienze = () => {
     fetch(URL, {
@@ -27,8 +28,16 @@ const Esperienze = () => {
         Authorization: authorization,
       },
     })
-      .then((res) => res.json())
-      .then(setEsperienze)
+      .then((res) => {
+        if (!res.ok) {
+          throw new Error("Errore nel recupero delle esperienze");
+        }
+        return res.json();
+      })
+      .then((data) => {
+        setEsperienze(data);
+        dispatch({ type: "SET_ESPERIENZE", payload: data });
+      })
       .catch(console.error);
   };
 
@@ -58,7 +67,38 @@ const Esperienze = () => {
     const { name, value } = e.target;
     setAddEsperienza({ ...addEsperienza, [name]: value });
   };
+  const handleDeleteExperience = async () => {
+    if (!selectedExperienceId) return;
 
+    try {
+      const response = await fetch(`${URL}/${selectedExperienceId}`, {
+        method: "DELETE",
+        headers: {
+          Authorization: authorization,
+        },
+      });
+
+      if (!response.ok) {
+        throw new Error("Errore durante l'eliminazione");
+      }
+
+      // Refetch esperienze dopo DELETE
+      const res = await fetch(URL, {
+        headers: {
+          Authorization: authorization,
+        },
+      });
+      const updatedData = await res.json();
+
+      dispatch({ type: "SET_ESPERIENZE", payload: updatedData });
+      setEsperienze(updatedData);
+      handleCloseModal();
+      alert("L'esperienza è stata eliminata");
+    } catch (error) {
+      console.error("Errore DELETE:", error);
+      alert("Errore durante l'eliminazione");
+    }
+  };
   const handleEditExperience = (exp) => {
     setAddEsperienza({
       role: exp.role || "",
@@ -197,9 +237,16 @@ const Esperienze = () => {
                 onChange={handleInputChange}
               />
             </Form.Group>
-            <Button variant="primary" type="submit">
-              {selectedExperienceId ? "Aggiorna" : "Salva"}
-            </Button>
+            <div className="d-flex justify-content-between align-items-center">
+              <Button variant="primary" type="submit">
+                {selectedExperienceId ? "Aggiorna" : "Salva"}
+              </Button>
+              {selectedExperienceId && (
+                <Button variant="danger" onClick={handleDeleteExperience}>
+                  Elimina
+                </Button>
+              )}
+            </div>
           </Form>
         </Modal.Body>
       </Modal>
