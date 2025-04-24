@@ -11,13 +11,13 @@ const Copertina =
 
 const URL = "https://striveschool-api.herokuapp.com/api/profile/me";
 
-const authorization =
-  "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2ODA3NjdiMWQ0NTE4MTAwMTVjZTgzZDgiLCJpYXQiOjE3NDUzOTgxODYsImV4cCI6MTc0NjYwNzc4Nn0.hQJA7Fri0PEaMrJQ5Jsd9c_ucAmS_bVgv0BzVjV1tFo";
+const authorization = ` Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2ODBhMDQxMTFmMzVjZjAwMTU1MTdhNWYiLCJpYXQiOjE3NDU0OTY1NjgsImV4cCI6MTc0NjcwNjE2OH0.3baW5bedqo-vAbAHGPQAyLAYtvITWqVPPDN_o1YO2og`;
 
 const MainProfile = function () {
   const profile = useSelector((state) => state.profile.profile);
 
   const dispatch = useDispatch();
+
   const uploadProfileImage = (file) => {
     const formData = new FormData();
     formData.append("profile", file);
