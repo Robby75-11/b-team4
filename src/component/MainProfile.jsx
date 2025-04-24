@@ -9,7 +9,7 @@ const Profilo =
 const Copertina =
   "https://img.freepik.com/foto-premium/l-icona-su-sfondo-blu-concetto-di-lavoro-di-squadra-rete-e-comunita_524876-390.jpg";
 
-const authorization = `bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2ODA3NjdiMWQ0NTE4MTAwMTVjZTgzZDgiLCJpYXQiOjE3NDUzMTU3NjIsImV4cCI6MTc0NjUyNTM2Mn0.OWx9zeZE9btF7nPn_CDpHjse4Frk6cxi9iNO3EctW9A`;
+const authorization = `bearer `;
 
 const MainProfile = ({ userId }) => {
   const profile = useSelector((state) => state.profile.profile);
