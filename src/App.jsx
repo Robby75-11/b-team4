@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import "./App.css";
 import NavBar from "./component/NavBar";
 import Esperienze from "./component/Esperienze";
@@ -14,6 +14,13 @@ import SideBar from "./component/SideBar";
 import Messaggi from "./component/messaggi";
 
 function App() {
+  const [selectedUserId, setSelectedUserId] = useState(
+    "680767b1d451810015ce83d8"
+  ); // ID iniziale del profilo
+
+  const handleProfileSelect = (userId) => {
+    setSelectedUserId(userId); // Aggiorna l'ID del profilo selezionato
+  };
   return (
     <>
       <NavBar />
@@ -29,14 +36,14 @@ function App() {
             className="col-12 col-lg-9"
             style={{ display: "flex", flexDirection: "column", gap: 10 }}
           >
-            <MainProfile />
+            <MainProfile userId={selectedUserId} />
             <Esperienze />
             <Formazione />
             <Lingue />
             <Competenze />
           </div>
           <div className="col-lg-3 d-none d-lg-block">
-            <SideBar />
+            <SideBar onProfileSelect={handleProfileSelect} />
           </div>
         </div>
         <div>

@@ -11,11 +11,11 @@ import {
 import { Pencil, SendFill, PersonPlusFill } from "react-bootstrap-icons";
 import { useEffect, useState } from "react";
 
-const SideBar = () => {
+const SideBar = ({ onProfileSelect }) => {
   const [filteredProfiles, setFilteredProfiles] = useState([]);
 
   const wantedUsers = [
-    "Roberto Giuseppe Albergo",
+    "Roberto Albergo",
     "Anna Firinu",
     "Marco Minisgallo",
     "Marco Teodoro Mancuso",
@@ -138,7 +138,20 @@ const SideBar = () => {
                 </Col>
                 <Col>
                   <h6 className="mb-0">
-                    {user.name} {user.surname}
+                    <a
+                      href="#"
+                      onClick={(e) => {
+                        e.preventDefault(); // Previene il comportamento predefinito del link
+                        onProfileSelect(user._id); // Passa l'ID del profilo selezionato
+                      }}
+                      style={{
+                        textDecoration: "none",
+                        color: "black",
+                        cursor: "pointer",
+                      }}
+                    >
+                      {user.name} {user.surname}
+                    </a>
                     <span className="text-primary fw-normal"> in </span>
                     <span className="text-muted">• 1°</span>
                   </h6>

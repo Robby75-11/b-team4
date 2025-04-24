@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Row, Col, Modal, Button, Form } from "react-bootstrap";
-import { useSelector, useDispatch } from "react-redux";
+import { useSelector } from "react-redux";
 
 const URL =
   "https://striveschool-api.herokuapp.com/api/profile/680767b1d451810015ce83d8/experiences";
@@ -8,8 +8,7 @@ const authorization =
   "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2ODA3NjdiMWQ0NTE4MTAwMTVjZTgzZDgiLCJpYXQiOjE3NDUzOTgxODYsImV4cCI6MTc0NjYwNzc4Nn0.hQJA7Fri0PEaMrJQ5Jsd9c_ucAmS_bVgv0BzVjV1tFo";
 
 const Esperienze = () => {
-  const profile = useSelector((state) => state.profile.profile);
-  const dispatch = useDispatch();
+  const profile = useSelector((state) => state.profile.profile); // Recupera il profilo corrente dallo stato Redux
   const [esperienze, setEsperienze] = useState([]);
   const [showModal, setShowModal] = useState(false);
   const [selectedExperienceId, setSelectedExperienceId] = useState(null);
@@ -23,6 +22,13 @@ const Esperienze = () => {
   });
 
   const fetchEsperienze = () => {
+    if (!profile._id) {
+      console.error("ID profilo non definito");
+      return;
+    }
+
+    const URL = `https://striveschool-api.herokuapp.com/api/profile/${profile._id}/experiences`;
+
     fetch(URL, {
       headers: {
         Authorization: authorization,
@@ -36,14 +42,13 @@ const Esperienze = () => {
       })
       .then((data) => {
         setEsperienze(data);
-        dispatch({ type: "SET_ESPERIENZE", payload: data });
       })
-      .catch(console.error);
+      .catch((err) => console.error("Errore:", err));
   };
 
   useEffect(() => {
-    fetchEsperienze();
-  }, []);
+    fetchEsperienze(); // Esegui la fetch ogni volta che cambia il profilo
+  }, [profile._id]);
 
   const handleShowModal = () => {
     setAddEsperienza({
@@ -67,37 +72,33 @@ const Esperienze = () => {
     const { name, value } = e.target;
     setAddEsperienza({ ...addEsperienza, [name]: value });
   };
-  const handleDeleteExperience = async () => {
-    if (!selectedExperienceId) return;
-
-    try {
-      const response = await fetch(`${URL}/${selectedExperienceId}`, {
-        method: "DELETE",
-        headers: {
-          Authorization: authorization,
-        },
-      });
-
-      if (!response.ok) {
-        throw new Error("Errore durante l'eliminazione");
-      }
-
-      // Refetch esperienze dopo DELETE
-      const res = await fetch(URL, {
-        headers: {
-          Authorization: authorization,
-        },
-      });
-      const updatedData = await res.json();
-
-      dispatch({ type: "SET_ESPERIENZE", payload: updatedData });
-      setEsperienze(updatedData);
-      handleCloseModal();
-      alert("L'esperienza è stata eliminata");
-    } catch (error) {
-      console.error("Errore DELETE:", error);
-      alert("Errore durante l'eliminazione");
+  const handleDeleteExperience = (experienceId) => {
+    if (!profile || !profile._id) {
+      console.error("ID profilo non definito o profilo non caricato");
+      return;
     }
+
+    const URL = `https://striveschool-api.herokuapp.com/api/profile/${profile._id}/experiences/${experienceId}`;
+
+    fetch(URL, {
+      method: "DELETE",
+      headers: {
+        Authorization: authorization,
+      },
+    })
+      .then((res) => {
+        if (!res.ok) {
+          throw new Error("Errore durante l'eliminazione dell'esperienza");
+        }
+        return res.text(); // Usa .text() invece di .json() per gestire risposte non JSON
+      })
+      .then((message) => {
+        console.log("Esperienza eliminata:", message);
+        setEsperienze((prevEsperienze) =>
+          prevEsperienze.filter((exp) => exp._id !== experienceId)
+        );
+      })
+      .catch((err) => console.error("Errore:", err));
   };
   const handleEditExperience = (exp) => {
     setAddEsperienza({
@@ -179,8 +180,8 @@ const Esperienze = () => {
             <p className="text-muted fst-italic">Nessuna esperienza presente</p>
           </Col>
         ) : (
-          esperienze.map((esperienza, index) => (
-            <Col xs={12} className="mb-3" key={index}>
+          esperienze.map((esperienza) => (
+            <Col xs={12} className="mb-3" key={esperienza._id}>
               <div className="d-flex border-bottom border-secondary">
                 <div>
                   <img
@@ -196,35 +197,38 @@ const Esperienze = () => {
                     }}
                     className="me-3 mt-3 rounded"
                   />
-                  <Form.Group
-                    controlId={`upload-${esperienza._id}`}
-                    className="mt-2"
-                  >
-                    <Form.Control
-                      type="file"
-                      onChange={(e) =>
-                        handleImageUpload(e.target.files[0], esperienza._id)
-                      }
-                    />
-                  </Form.Group>
                 </div>
                 <div className="mt-3 lh-1 w-100">
                   <div className="d-flex justify-content-between">
-                    <p className="fw-bold">{esperienza.role}</p>
-                    <i
-                      className="bi bi-pencil text-black"
-                      onClick={() => handleEditExperience(esperienza)}
-                      style={{ cursor: "pointer" }}
-                    ></i>
+                    <p className="fw-bold">
+                      {esperienza.role || "Ruolo non disponibile"}
+                    </p>
+                    <div>
+                      <i
+                        className="bi bi-pencil text-black me-3"
+                        onClick={() => setSelectedExperienceId(esperienza._id)}
+                        style={{ cursor: "pointer" }}
+                      ></i>
+                      <i
+                        className="bi bi-trash text-danger"
+                        onClick={() => handleDeleteExperience(esperienza._id)}
+                        style={{ cursor: "pointer" }}
+                      ></i>
+                    </div>
                   </div>
-                  <p>{esperienza.company}</p>
+                  <p>{esperienza.company || "Azienda non disponibile"}</p>
                   <p className="text-secondary">
-                    {new Date(esperienza.startDate).toLocaleDateString()} -{" "}
+                    {esperienza.startDate
+                      ? new Date(esperienza.startDate).toLocaleDateString()
+                      : "Data inizio non disponibile"}{" "}
+                    -{" "}
                     {esperienza.endDate
                       ? new Date(esperienza.endDate).toLocaleDateString()
                       : "Presente"}
                   </p>
-                  <div className="fw-bold mt-5 mb-4">{esperienza.area}</div>
+                  <div className="fw-bold mt-5 mb-4">
+                    {esperienza.area || "Area non disponibile"}
+                  </div>
                 </div>
               </div>
             </Col>
