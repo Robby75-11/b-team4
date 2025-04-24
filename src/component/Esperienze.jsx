@@ -149,7 +149,7 @@ const Esperienze = () => {
                       ? new Date(esperienza.endDate).toLocaleDateString()
                       : "Presente"}
                   </p>
-                  <div className="fw-bold">{esperienza.area}</div>
+                  <div className="fw-bold mt-5 mb-4">{esperienza.area}</div>
                 </div>
               </div>
             </Col>
