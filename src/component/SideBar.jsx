@@ -10,8 +10,37 @@ import {
   Image,
 } from "react-bootstrap";
 import { Pencil, SendFill, PersonPlusFill } from "react-bootstrap-icons";
+import { useEffect, useState } from "react";
 
 const SideBar = () => {
+  const [filteredProfiles, setFilteredProfiles] = useState([]);
+
+  const wantedUsers = [
+    "Roberto Giuseppe Albergo",
+    "Anna Firinu",
+    "Marco Minisgallo",
+    "Marco Teodoro Mancuso",
+    "Alessandro Di Benedetto",
+    "Roberto Ciancio",
+  ];
+
+  useEffect(() => {
+    fetch("https://striveschool-api.herokuapp.com/api/profile/", {
+      headers: {
+        Authorization:
+          "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2ODBhMDYyNDFmMzVjZjAwMTU1MTdhNjAiLCJpYXQiOjE3NDU0ODczOTYsImV4cCI6MTc0NjY5Njk5Nn0.0U1k0IoAeLEqJhy1hR6gU54RmcFlQIj_tpxm74nuFgo",
+      },
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        const matching = data.filter((user) =>
+          wantedUsers.includes(`${user.name} ${user.surname}`)
+        );
+        setFilteredProfiles(matching);
+      })
+      .catch((err) => console.error("Errore nel caricamento profili:", err));
+  }, []);
+
   const people = [
     {
       name: "Stefania Spampinato",
@@ -87,6 +116,7 @@ const SideBar = () => {
           </ListGroup.Item>
         </ListGroup>
       </Card>
+      {/* utenti da rendere dinamici  */}
 
       <Card className="mb-3">
         <Card.Header>
@@ -94,57 +124,39 @@ const SideBar = () => {
           <p className="text-muted">Solo per te</p>
         </Card.Header>
         <ListGroup variant="flush">
-          <ListGroup.Item>
-            <Row className="align-items-center">
-              <Col xs="auto">
-                <Image
-                  src="https://via.placeholder.com/40/f0f0f0/808080?Text=GT"
-                  alt="Gaia Tripi"
-                  roundedCircle
-                  className="me-2"
-                />
-              </Col>
-              <Col>
-                <h6 className="mb-0">
-                  Gaia Tripi <span className="text-primary fw-normal">in</span>{" "}
-                  <span className="text-muted">• 1°</span>
-                </h6>
-                <p className="text-muted text-truncate">
-                  Dottoressa in Lettere e Comunicazione..
-                </p>
-              </Col>
-            </Row>
-            <Button variant="outline-primary" size="sm" className="mt-2">
-              <SendFill size={16} className="me-1" /> Messaggio
-            </Button>
-          </ListGroup.Item>
-          <ListGroup.Item>
-            <Row className="align-items-center">
-              <Col xs="auto">
-                <Image
-                  src="https://via.placeholder.com/40/e0e0e0/707070?Text=AM"
-                  alt="Andrea Morgana"
-                  roundedCircle
-                  className="me-2"
-                />
-              </Col>
-              <Col>
-                <h6 className="mb-0">
-                  Andrea Morgana <span className="text-muted">• 1°</span>
-                </h6>
-                <p className="text-muted text-truncate">
-                  Fotografo, Videomaker, Content Creator
-                </p>
-              </Col>
-            </Row>
-            <Button variant="outline-primary" size="sm" className="mt-2">
-              <SendFill size={16} className="me-1" /> Messaggio
-            </Button>
-          </ListGroup.Item>
+          {filteredProfiles.map((user) => (
+            <ListGroup.Item key={user._id}>
+              <Row className="align-items-center">
+                <Col xs="auto">
+                  <Image
+                    src={user.image}
+                    alt={`${user.name} ${user.surname}`}
+                    roundedCircle
+                    className="me-2"
+                    width={40}
+                    height={40}
+                  />
+                </Col>
+                <Col>
+                  <h6 className="mb-0">
+                    {user.name} {user.surname}
+                    <span className="text-primary fw-normal"> in </span>
+                    <span className="text-muted">• 1°</span>
+                  </h6>
+                  <p className="text-muted text-truncate mb-0">{user.title}</p>
+                </Col>
+              </Row>
+              <Button variant="outline-primary" size="sm" className="mt-2">
+                <SendFill size={16} className="me-1" />
+                Messaggio
+              </Button>
+            </ListGroup.Item>
+          ))}
+
+          {/* Blocco Premium */}
           <ListGroup.Item className="text-center">
             <Row className="align-items-center justify-content-center mb-2">
               <Col xs="auto">
-                {/* Placeholder for the key icon */}
                 <div
                   style={{
                     width: "30px",
@@ -163,19 +175,18 @@ const SideBar = () => {
                 <h6 className="mb-0">Sblocca l'elenco completo</h6>
               </Col>
             </Row>
-            <small className="text-muted mb-2">
+            <small className="text-muted mb-2 d-block">
               Scopri gli altri profili visitati spesso insieme al tuo
             </small>
             <Button variant="warning" size="sm" className="mb-2">
               Prova Premium per 0 EUR
             </Button>
-            <small className="text-muted">
+            <small className="text-muted d-block">
               1 mese gratis con assistenza 24/7. Annulli in qualsiasi momento.
               Ti invieremo un promemoria 7 giorni prima della fine del periodo
               di prova.
             </small>
           </ListGroup.Item>
-          {/* Placeholder for blurred profiles */}
         </ListGroup>
       </Card>
       {/* seconda parte */}
