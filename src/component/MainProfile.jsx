@@ -11,7 +11,7 @@ const Copertina =
 
 const URL = "https://striveschool-api.herokuapp.com/api/profile/me";
 
-const authorization = ` Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2ODBhMDQxMTFmMzVjZjAwMTU1MTdhNWYiLCJpYXQiOjE3NDU0OTY1NjgsImV4cCI6MTc0NjcwNjE2OH0.3baW5bedqo-vAbAHGPQAyLAYtvITWqVPPDN_o1YO2og`;
+const authorization = `bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2ODBhMDQxMTFmMzVjZjAwMTU1MTdhNWYiLCJpYXQiOjE3NDU0OTY1NjgsImV4cCI6MTc0NjcwNjE2OH0.3baW5bedqo-vAbAHGPQAyLAYtvITWqVPPDN_o1YO2og`;
 
 const MainProfile = function () {
   const profile = useSelector((state) => state.profile.profile);
