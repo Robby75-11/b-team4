@@ -200,10 +200,12 @@ const SideBar = () => {
               <Row className="align-items-center">
                 <Col xs="auto">
                   <Image
-                    src={person.imageUrl}
+                    src="https://picsum.photos/seed/profilo1/100/100
+
+"
                     alt={person.name}
                     roundedCircle
-                    className="me-2"
+                    className="me-2 w-25"
                   />
                 </Col>
                 <Col>
@@ -239,10 +241,10 @@ const SideBar = () => {
               <Row className="align-items-center mb-2">
                 <Col xs="auto">
                   <Image
-                    src={page.imageUrl}
+                    src="https://picsum.photos/seed/profilo1/100/100"
                     alt={page.name}
                     rounded
-                    className="me-2"
+                    className="me-2 "
                     style={{
                       width: "40px",
                       height: "40px",
@@ -259,7 +261,7 @@ const SideBar = () => {
               {page.connectionsWorking && (
                 <div className="d-flex align-items-center mb-2">
                   <Image
-                    src="https://via.placeholder.com/20/808080/ffffff?Text=U"
+                    src="https://picsum.photos/seed/profilo1/100/100"
                     alt="User"
                     roundedCircle
                     className="me-1"
@@ -280,10 +282,7 @@ const SideBar = () => {
                     {Array.from({ length: 3 }).map((_, i) => (
                       <Image
                         key={i}
-                        src={`https://via.placeholder.com/20/${
-                          30 * (i + 1)
-                        }30/${30 * (i + 1)}30?Text=U${i + 1}`}
-                        alt={`User ${i + 1}`}
+                        src="https://picsum.photos/seed/profilo1/100/100"
                         roundedCircle
                         className="me-1"
                         style={{
